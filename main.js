@@ -78,111 +78,132 @@ var Anonymizr = {
     }
   ],
 
+  autodetect: function () {
+    var siteKey,
+        found = false;
+
+    for(siteKey in Anonymizr.sites) {
+      if(Anonymizr.sites[siteKey].hostnameCheck instanceof RegExp) {
+        found = Anonymizr.sites[siteKey].hostnameCheck.test(window.location.hostname);
+      } else {
+        found = Anonymizr.sites[siteKey].hostnameCheck === window.location.hostname;
+      }
+
+      if(found) {
+        Anonymizr.sites[siteKey].process();
+        break;
+      }
+    }
+  },
+
   /**
    * Sites
    */
   sites: {
-    twitter: function () {
-      var getUsernameInfo = Anonymizr.util.getUsernameClosure(),
-          userInfo,
-          username,
-          i;
+    twitter: {
+      hostnameCheck: 'twitter.com',
+      process: function () {
+        var getUsernameInfo = Anonymizr.util.getUsernameClosure(),
+            userInfo,
+            username,
+            i;
 
-      // Avatars
-      var avatars = document.querySelectorAll('.avatar, .DashboardProfileCard-avatarImage');
+        // Avatars
+        var avatars = document.querySelectorAll('.avatar, .DashboardProfileCard-avatarImage');
 
-      for (i = 0; i < avatars.length; i++) {
-        Anonymizr.util.blur(avatars[i]);
-      }
-
-      // Account groups (normal tweets and Who to follow)
-      var accountGroups = document.querySelectorAll('.account-group'),
-          accountGroupUsername;
-
-      for(i = 0; i < accountGroups.length; i++) {
-        // Username for normal tweets
-        accountGroupUsername = accountGroups[i].querySelector('.username b');
-
-        if(accountGroupUsername) {
-          userInfo = getUsernameInfo(accountGroupUsername.textContent);
-          accountGroupUsername.textContent = userInfo.username;
+        for (i = 0; i < avatars.length; i++) {
+          Anonymizr.util.blur(avatars[i]);
         }
 
-        // Username for Who to follow
-        accountGroupUsername = accountGroups[i].querySelector('.account-group-inner .username span.js-username');
+        // Account groups (normal tweets and Who to follow)
+        var accountGroups = document.querySelectorAll('.account-group'),
+            accountGroupUsername;
 
-        if(accountGroupUsername) {
-          userInfo = getUsernameInfo(accountGroupUsername.textContent);
-          accountGroupUsername.textContent = userInfo.username;
+        for(i = 0; i < accountGroups.length; i++) {
+          // Username for normal tweets
+          accountGroupUsername = accountGroups[i].querySelector('.username b');
+
+          if(accountGroupUsername) {
+            userInfo = getUsernameInfo(accountGroupUsername.textContent);
+            accountGroupUsername.textContent = userInfo.username;
+          }
+
+          // Username for Who to follow
+          accountGroupUsername = accountGroups[i].querySelector('.account-group-inner .username span.js-username');
+
+          if(accountGroupUsername) {
+            userInfo = getUsernameInfo(accountGroupUsername.textContent);
+            accountGroupUsername.textContent = userInfo.username;
+          }
+
+          // Full name for both
+          if(userInfo) {
+            accountGroups[i].querySelector('.fullname').textContent = userInfo.name;
+          }
         }
 
-        // Full name for both
-        if(userInfo) {
-          accountGroups[i].querySelector('.fullname').textContent = userInfo.name;
+        // Quoted tweets
+        var quotedTweets = document.querySelectorAll('.QuoteTweet-originalAuthor'),
+          quotedTweetUsername;
+
+        for(i = 0; i < quotedTweets.length; i++) {
+          quotedTweetUsername = quotedTweets[i].querySelector('.QuoteTweet-screenname').childNodes[2];
+          userInfo = getUsernameInfo(quotedTweetUsername.textContent);
+
+          quotedTweetUsername.textContent = userInfo.username;
+          quotedTweets[i].querySelector('.QuoteTweet-fullname').textContent = userInfo.name;
         }
-      }
 
-      // Quoted tweets
-      var quotedTweets = document.querySelectorAll('.QuoteTweet-originalAuthor'),
-        quotedTweetUsername;
+        // Retweet headers
+        var retweetHeaders =
+          document.querySelectorAll('[data-retweeter] .js-retweet-text .js-user-profile-link');
 
-      for(i = 0; i < quotedTweets.length; i++) {
-        quotedTweetUsername = quotedTweets[i].querySelector('.QuoteTweet-screenname').childNodes[2];
-        userInfo = getUsernameInfo(quotedTweetUsername.textContent);
-
-        quotedTweetUsername.textContent = userInfo.username;
-        quotedTweets[i].querySelector('.QuoteTweet-fullname').textContent = userInfo.name;
-      }
-
-      // Retweet headers
-      var retweetHeaders =
-        document.querySelectorAll('[data-retweeter] .js-retweet-text .js-user-profile-link');
-
-      for(i = 0; i < retweetHeaders.length; i++) {
-        username = Anonymizr.util.sites.twitter.getUsernameFromUrl(retweetHeaders[i].href);
-        userInfo = getUsernameInfo(username);
-        retweetHeaders[i].querySelector('b').textContent = userInfo.name + ' Retweeted';
-      }
-
-      // Reply text
-      var replyTexts =
-        document.querySelectorAll('[data-is-reply-to="true"] .Icon--reply + span .js-user-profile-link');
-
-      for(i = 0; i < replyTexts.length; i++) {
-        username = Anonymizr.util.sites.twitter.getUsernameFromUrl(replyTexts[i].href);
-        userInfo = getUsernameInfo(username);
-
-        if(replyTexts[i].querySelector('b')) {
-          replyTexts[i].querySelector('b').textContent = userInfo.name;
+        for(i = 0; i < retweetHeaders.length; i++) {
+          username = Anonymizr.util.sites.twitter.getUsernameFromUrl(retweetHeaders[i].href);
+          userInfo = getUsernameInfo(username);
+          retweetHeaders[i].querySelector('b').textContent = userInfo.name + ' Retweeted';
         }
-      }
 
-      // Conversation headers for replies
-      var conversationHeaders = document.querySelectorAll('.conversation-header .uncollapse');
+        // Reply text
+        var replyTexts =
+          document.querySelectorAll('[data-is-reply-to="true"] .Icon--reply + span .js-user-profile-link');
 
-      for(i = 0; i < conversationHeaders.length; i++) {
-        username = Anonymizr.util.sites.twitter.getUsernameFromUrl(conversationHeaders[i].href);
-        userInfo = getUsernameInfo(username);
-        conversationHeaders[i].childNodes[2].textContent = 'In reply to ' + userInfo.name;
-      }
+        for(i = 0; i < replyTexts.length; i++) {
+          username = Anonymizr.util.sites.twitter.getUsernameFromUrl(replyTexts[i].href);
+          userInfo = getUsernameInfo(username);
 
-      // At replies
-      var atReplies = document.querySelectorAll('.twitter-atreply b');
+          if(replyTexts[i].querySelector('b')) {
+            replyTexts[i].querySelector('b').textContent = userInfo.name;
+          }
+        }
 
-      for(i = 0; i < atReplies.length; i++) {
-        userInfo = getUsernameInfo(atReplies[i].textContent);
-        atReplies[i].textContent = userInfo.username;
-      }
+        // Conversation headers for replies
+        var conversationHeaders = document.querySelectorAll('.conversation-header .uncollapse');
 
-      // Profile card
-      var profileCard = document.querySelector('.DashboardProfileCard-userFields'),
-          profileCardUsername;
+        for(i = 0; i < conversationHeaders.length; i++) {
+          username = Anonymizr.util.sites.twitter.getUsernameFromUrl(conversationHeaders[i].href);
+          userInfo = getUsernameInfo(username);
+          conversationHeaders[i].childNodes[2].textContent = 'In reply to ' + userInfo.name;
+        }
 
-      if(profileCard) {
-        profileCardUsername = profileCard.querySelector('.DashboardProfileCard-screenname a span');
-        userInfo = getUsernameInfo(profileCardUsername.textContent);
-        profileCardUsername.textContent = userInfo.username;
-        profileCard.querySelector('.DashboardProfileCard-name a').textContent = userInfo.name;
+        // At replies
+        var atReplies = document.querySelectorAll('.twitter-atreply b');
+
+        for(i = 0; i < atReplies.length; i++) {
+          userInfo = getUsernameInfo(atReplies[i].textContent);
+          atReplies[i].textContent = userInfo.username;
+        }
+
+        // Profile card
+        var profileCard = document.querySelector('.DashboardProfileCard-userFields'),
+            profileCardUsername;
+
+        if(profileCard) {
+          profileCardUsername = profileCard.querySelector('.DashboardProfileCard-screenname a span');
+          userInfo = getUsernameInfo(profileCardUsername.textContent);
+          profileCardUsername.textContent = userInfo.username;
+          profileCard.querySelector('.DashboardProfileCard-name a').textContent = userInfo.name;
+        }
       }
     },
   },
