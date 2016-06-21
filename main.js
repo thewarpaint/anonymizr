@@ -1,4 +1,83 @@
 var Anonymizr = {
+  people: [
+    {
+      name: 'Abradolf Linkler',
+      username: 'alinkler'
+    },
+    {
+      name: 'Beatriz Viterbo',
+      username: 'bv1945'
+    },
+    {
+      name: 'Charles Burns',
+      username: 'charlesb'
+    },
+    {
+      name: 'Dr. Strangelove',
+      username: 'drstrnglv'
+    },
+    {
+      name: 'Edward Meechum',
+      username: 'em_ss'
+    },
+    {
+      name: 'FN-2187',
+      username: 'fn2187'
+    },
+    {
+      name: 'Gertie Barrimore',
+      username: 'gertie_b'
+    },
+    {
+      name: 'Holden Caulfield',
+      username: 'hcaulfield'
+    },
+    {
+      name: 'Inigo Montoya',
+      username: 'inigo_tpb'
+    },
+    {
+      name: 'John Doe',
+      username: 'johndoe7'
+    },
+    {
+      name: 'Karellen',
+      username: 'earthsupervisor'
+    },
+    {
+      name: 'Laurie Juspeczyk',
+      username: 'sspectre_ii'
+    },
+    {
+      name: 'Marty McFly',
+      username: 'bttf'
+    },
+    {
+      name: 'Nigel Godrich',
+      username: 'lp09'
+    },
+    {
+      name: 'Paul Allen',
+      username: 'dorsialover'
+    },
+    {
+      name: 'Robert Paulson',
+      username: 'whatsyrnameagain'
+    },
+    {
+      name: 'Thirteen',
+      username: 'li3s'
+    },
+    {
+      name: 'Vincent Vega',
+      username: 'footmaster'
+    },
+    {
+      name: 'Walt Whitman',
+      username: '_willy_wonka_'
+    }
+  ],
+
   /**
    * Sites
    */
