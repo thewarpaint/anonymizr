@@ -123,6 +123,35 @@ var Anonymizr = {
    * Sites
    */
   sites: {
+    reddit: {
+      hostnameCheck: 'www.reddit.com',
+      process: function () {
+        var getUsernameInfo = Anonymizr.util.getUsernameClosure(),
+            userInfo,
+            username,
+            i;
+
+        // Authors
+        var authors = document.querySelectorAll('.author');
+
+        for(i = 0; i < authors.length; i++) {
+          username = authors[i].textContent;
+          userInfo = getUsernameInfo(username);
+          authors[i].style.backgroundColor = userInfo.color;
+          authors[i].style.color = userInfo.color;
+        }
+
+        // User mentions
+        var mentions = document.querySelectorAll('[href^="/u/"]');
+
+        for(i = 0; i < mentions.length; i++) {
+          username = Anonymizr.util.sites.reddit.getUsernameFromUrl(mentions[i].href);
+          userInfo = getUsernameInfo(username);
+          mentions[i].style.backgroundColor = userInfo.color;
+          mentions[i].style.color = userInfo.color;
+        }
+      }
+    },
     twitter: {
       hostnameCheck: 'twitter.com',
       process: function () {
@@ -236,6 +265,11 @@ var Anonymizr = {
    */
   util: {
     sites: {
+      reddit: {
+        getUsernameFromUrl: function (url) {
+          return url.split('/')[4];
+        }
+      },
       twitter: {
         getUsernameFromUrl: function (url) {
           return url.split('/')[3];
