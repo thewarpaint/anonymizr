@@ -145,10 +145,59 @@ var Anonymizr = {
   /**
    * Utilities
    */
-  blur: function (element) {
-    var filter = 'blur(3px)';
+  util: {
+    sites: {
+      twitter: {
+        getUsernameFromUrl: function (url) {
+          return url.split('/')[3];
+        }
+      }
+    },
 
-    element.style.filter = filter;
-    element.style.webkitFilter = filter;
+    blur: function (element) {
+      var filter = 'blur(3px)';
+
+      element.style.filter = filter;
+      element.style.webkitFilter = filter;
+    },
+
+    // Fisher-Yates shuffle implementation from http://stackoverflow.com/a/2450976/6346268
+    shuffle: function (array) {
+      var currentIndex = array.length,
+          temporaryValue,
+          randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    },
+
+    getUsernameClosure: function () {
+      var usernameMap = {},
+          userCount = 0;
+
+      Anonymizr.util.shuffle(Anonymizr.people);
+
+      return function (username) {
+        username = username.toLowerCase();
+
+        if(!usernameMap[username]) {
+          usernameMap[username] = Anonymizr.people[userCount];
+          userCount = (userCount + 1) % Anonymizr.people.length;
+        }
+
+        return usernameMap[username];
+      };
+    }
   }
 };
