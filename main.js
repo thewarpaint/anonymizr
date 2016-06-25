@@ -145,11 +145,16 @@ var Anonymizr = {
         var mentions = document.querySelectorAll('[href^="/u/"]');
 
         for(i = 0; i < mentions.length; i++) {
-          username = Anonymizr.util.sites.reddit.getUsernameFromUrl(mentions[i].href);
+          username = Anonymizr.sites.reddit.getUsernameFromUrl(mentions[i].href);
           userInfo = getUsernameInfo(username);
           mentions[i].style.backgroundColor = userInfo.color;
           mentions[i].style.color = userInfo.color;
         }
+      },
+
+      // Utilities
+      getUsernameFromUrl: function (url) {
+        return url.split('/')[4];
       }
     },
     twitter: {
@@ -211,7 +216,7 @@ var Anonymizr = {
           document.querySelectorAll('[data-retweeter] .js-retweet-text .js-user-profile-link');
 
         for(i = 0; i < retweetHeaders.length; i++) {
-          username = Anonymizr.util.sites.twitter.getUsernameFromUrl(retweetHeaders[i].href);
+          username = Anonymizr.sites.twitter.getUsernameFromUrl(retweetHeaders[i].href);
           userInfo = getUsernameInfo(username);
           retweetHeaders[i].querySelector('b').textContent = userInfo.name + ' Retweeted';
         }
@@ -221,7 +226,7 @@ var Anonymizr = {
           document.querySelectorAll('[data-is-reply-to="true"] .Icon--reply + span .js-user-profile-link');
 
         for(i = 0; i < replyTexts.length; i++) {
-          username = Anonymizr.util.sites.twitter.getUsernameFromUrl(replyTexts[i].href);
+          username = Anonymizr.sites.twitter.getUsernameFromUrl(replyTexts[i].href);
           userInfo = getUsernameInfo(username);
 
           if(replyTexts[i].querySelector('b')) {
@@ -233,7 +238,7 @@ var Anonymizr = {
         var conversationHeaders = document.querySelectorAll('.conversation-header .uncollapse');
 
         for(i = 0; i < conversationHeaders.length; i++) {
-          username = Anonymizr.util.sites.twitter.getUsernameFromUrl(conversationHeaders[i].href);
+          username = Anonymizr.sites.twitter.getUsernameFromUrl(conversationHeaders[i].href);
           userInfo = getUsernameInfo(username);
           conversationHeaders[i].childNodes[2].textContent = 'In reply to ' + userInfo.name;
         }
@@ -256,6 +261,11 @@ var Anonymizr = {
           profileCardUsername.textContent = userInfo.username;
           profileCard.querySelector('.DashboardProfileCard-name a').textContent = userInfo.name;
         }
+      },
+
+      // Utilities
+      getUsernameFromUrl: function (url) {
+        return url.split('/')[3];
       }
     },
   },
@@ -264,19 +274,6 @@ var Anonymizr = {
    * Utilities
    */
   util: {
-    sites: {
-      reddit: {
-        getUsernameFromUrl: function (url) {
-          return url.split('/')[4];
-        }
-      },
-      twitter: {
-        getUsernameFromUrl: function (url) {
-          return url.split('/')[3];
-        }
-      }
-    },
-
     blur: function (element) {
       var filter = 'blur(3px)';
 
