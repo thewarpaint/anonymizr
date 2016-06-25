@@ -137,8 +137,7 @@ var Anonymizr = {
         for(i = 0; i < authors.length; i++) {
           username = authors[i].textContent;
           userInfo = getUsernameInfo(username);
-          authors[i].style.backgroundColor = userInfo.color;
-          authors[i].style.color = userInfo.color;
+          Anonymizr.util.colorize(authors[i], userInfo.color);
         }
 
         // User mentions
@@ -147,8 +146,7 @@ var Anonymizr = {
         for(i = 0; i < mentions.length; i++) {
           username = Anonymizr.sites.reddit.getUsernameFromUrl(mentions[i].href);
           userInfo = getUsernameInfo(username);
-          mentions[i].style.backgroundColor = userInfo.color;
-          mentions[i].style.color = userInfo.color;
+          Anonymizr.util.colorize(mentions[i], userInfo.color);
         }
       },
 
@@ -279,6 +277,11 @@ var Anonymizr = {
 
       element.style.filter = filter;
       element.style.webkitFilter = filter;
+    },
+
+    colorize: function (element, color) {
+      element.style.backgroundColor = color;
+      element.style.color = color;
     },
 
     // Fisher-Yates shuffle implementation from http://stackoverflow.com/a/2450976/6346268
