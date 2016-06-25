@@ -4,10 +4,13 @@ Remove personal information from social networks and other websites before shari
 
 ## Supported sites
 
-+ Twitter
 + Reddit
++ Twitter
 
 ### To be supported
 
 + Facebook
 + GitHub
++ Instagram
++ LinkedIn
++ Youtube
