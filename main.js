@@ -317,8 +317,11 @@ var Anonymizr = {
         username = username.toLowerCase();
 
         if(!usernameMap[username]) {
-          usernameMap[username] = Anonymizr.people[userCount];
-          usernameMap[username].color = Anonymizr.colors[colorCount];
+          usernameMap[username] = {
+            name: Anonymizr.people[userCount].name,
+            username: Anonymizr.people[userCount].username,
+            color: Anonymizr.colors[colorCount]
+          };
 
           userCount = (userCount + 1) % Anonymizr.people.length;
           colorCount = (colorCount + 1) % Anonymizr.colors.length;
