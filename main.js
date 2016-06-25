@@ -123,6 +123,30 @@ var Anonymizr = {
    * Sites
    */
   sites: {
+    github: {
+      hostnameCheck: 'github.com',
+      process: function () {
+        var getUsernameInfo = Anonymizr.util.getUsernameClosure(),
+            i;
+
+        // Avatars
+        var avatars = document.querySelectorAll('.avatar, .timeline-comment-avatar');
+
+        for (i = 0; i < avatars.length; i++) {
+          Anonymizr.util.blur(avatars[i]);
+        }
+
+        // Authors and user mentions
+        var authors = document.querySelectorAll('.author, .author a, .user-mention');
+
+        for(i = 0; i < authors.length; i++) {
+          username = authors[i].textContent;
+          userInfo = getUsernameInfo(username);
+          Anonymizr.util.colorize(authors[i], userInfo.color);
+        }
+      }
+    },
+
     reddit: {
       hostnameCheck: 'www.reddit.com',
       process: function () {
