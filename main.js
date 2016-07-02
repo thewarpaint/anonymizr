@@ -138,10 +138,11 @@ var Anonymizr = {
         }
 
         // Authors and user mentions
-        var authors = document.querySelectorAll('.author, .author a, .user-mention');
+        var authors = document.querySelectorAll('.author, .author a, .user-mention'),
+            username;
 
         for(i = 0; i < authors.length; i++) {
-          username = authors[i].textContent;
+          username = authors[i].textContent.replace('@', '');
           userInfo = getUsernameInfo(username);
           Anonymizr.util.colorize(authors[i], userInfo.color);
         }
