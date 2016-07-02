@@ -1,25 +1,26 @@
 var Anonymizr = {
+  // https://material.google.com/style/color.html#color-color-palette
   colors: [
-    '#1abc9c',
-    '#16a085',
-    '#2ecc71',
-    '#27ae60',
-    '#3498db',
-    '#2980b9',
-    '#9b59b6',
-    '#8e44ad',
-    '#34495e',
-    '#2c3e50',
-    '#f1c40f',
-    '#f39c12',
-    '#e67e22',
-    '#d35400',
-    '#e74c3c',
-    '#c0392b',
-    '#ecf0f1',
-    '#bdc3c7',
-    '#95a5a6',
-    '#7f8c8d'
+    '#f44336', // Red: 500
+    '#e91e63', // Pink: 500
+    '#9c27b0', // Purple: 500
+    '#673ab7', // Deep Purple: 500
+    '#3f51b5', // Indigo: 500
+    '#2196f3', // Blue: 500
+    '#03a9f4', // Light Blue: 500
+    '#00bcd4', // Cyan: 500
+    '#009688', // Teal: 500
+    '#4caf50', // Green: 500
+    '#8bc34a', // Light Green: 500
+    '#cddc39', // Lime: 500
+    '#ffeb3b', // Yellow: 500
+    '#ffc107', // Amber: 500
+    '#ff9800', // Orange: 500
+    '#ff5722', // Deep Orange: 500
+    '#795548', // Brown: 500
+    '#9e9e9e', // Grey: 500
+    '#607d8b', // Blue Grey: 500
+    '#000000'  // Black: 500
   ],
 
   people: [
