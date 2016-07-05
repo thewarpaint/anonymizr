@@ -149,6 +149,48 @@ var Anonymizr = {
           userInfo = getUsernameInfo(username);
           Anonymizr.util.colorize(authors[i], userInfo.color);
         }
+
+        /**
+         * Dashboard
+         */
+        var dashboard = document.querySelector('#dashboard');
+
+        if(dashboard) {
+          // Account switcher
+          var accountSwitcherUsername = dashboard.querySelector('.account-switcher button span');
+
+          if(accountSwitcherUsername) {
+            userInfo = getUsernameInfo(accountSwitcherUsername.textContent);
+            Anonymizr.util.colorize(accountSwitcherUsername, userInfo.color);
+          }
+
+          // News
+          var newsLinks = dashboard.querySelectorAll('.news .title a'),
+              textContent,
+              span;
+
+          for(i = 0; i < newsLinks.length; i++) {
+            username = Anonymizr.sites.github.getUsernameFromUrl(newsLinks[i].href);
+            userInfo = getUsernameInfo(username);
+            textContent = newsLinks[i].textContent;
+
+            if(textContent.indexOf('/') === -1) {
+              Anonymizr.util.colorize(newsLinks[i], userInfo.color);
+            } else {
+              span = document.createElement('span');
+              span.textContent = username;
+              Anonymizr.util.colorize(span, userInfo.color);
+
+              newsLinks[i].textContent = textContent.replace(username, '');
+              newsLinks[i].insertBefore(span, newsLinks[i].childNodes[0]);
+            }
+          }
+        }
+      },
+
+      // Utilities
+      getUsernameFromUrl: function (url) {
+        return url.split('/')[3];
       }
     },
 
