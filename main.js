@@ -140,8 +140,10 @@ var Anonymizr = {
           Anonymizr.util.blur(avatars[i]);
         }
 
-        // Authors, user mentions, owners in repositories you contribute to
-        var authors = document.querySelectorAll('.author, .author a, .user-mention, .mini-repo-list .owner'),
+        // Authors, user mentions, owners in repositories you contribute to, opened by for Pull Request and
+        // Issue lists
+        var authors = document.querySelectorAll('.author, .author a, .user-mention, ' +
+              '.mini-repo-list .owner, .opened-by a'),
             username;
 
         for(i = 0; i < authors.length; i++) {
