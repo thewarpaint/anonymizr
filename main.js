@@ -17,8 +17,6 @@ var Anonymizr = {
     '#ffc107', // Amber: 500
     '#ff9800', // Orange: 500
     '#ff5722', // Deep Orange: 500
-    '#795548', // Brown: 500
-    '#9e9e9e', // Grey: 500
     '#607d8b', // Blue Grey: 500
     '#000000'  // Black: 500
   ],
