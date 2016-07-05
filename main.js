@@ -204,8 +204,8 @@ var Anonymizr = {
             username,
             i;
 
-        // Authors
-        var authors = document.querySelectorAll('.author');
+        // Authors, current user
+        var authors = document.querySelectorAll('.author, .user a');
 
         for(i = 0; i < authors.length; i++) {
           username = authors[i].textContent;
