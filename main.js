@@ -333,6 +333,15 @@ var Anonymizr = {
           profileCardUsername.textContent = userInfo.username;
           profileCard.querySelector('.DashboardProfileCard-name a').textContent = userInfo.name;
         }
+
+        // Stream activity headers (likes, likes to mentions, follows)
+        var streamHeaders = document.querySelectorAll('.stream-item-activity-header .js-user-profile-link');
+
+        for(i = 0; i < streamHeaders.length; i++) {
+          username = Anonymizr.sites.twitter.getUsernameFromUrl(streamHeaders[i].href);
+          userInfo = getUsernameInfo(username);
+          streamHeaders[i].querySelector('.fullname').textContent = userInfo.username;
+        }
       },
 
       // Utilities
