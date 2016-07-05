@@ -381,24 +381,23 @@ var Anonymizr = {
 
     getUsernameClosure: function () {
       var usernameMap = {},
-          userCount = 0,
-          colorCount = 0;
+          userIndex = 0,
+          colorIndex = Math.floor(Math.random() * Anonymizr.colors.length);
 
       Anonymizr.util.shuffle(Anonymizr.people);
-      Anonymizr.util.shuffle(Anonymizr.colors);
 
       return function (username) {
         username = username.toLowerCase();
 
         if(!usernameMap[username]) {
           usernameMap[username] = {
-            name: Anonymizr.people[userCount].name,
-            username: Anonymizr.people[userCount].username,
-            color: Anonymizr.colors[colorCount]
+            name: Anonymizr.people[userIndex].name,
+            username: Anonymizr.people[userIndex].username,
+            color: Anonymizr.colors[colorIndex]
           };
 
-          userCount = (userCount + 1) % Anonymizr.people.length;
-          colorCount = (colorCount + 1) % Anonymizr.colors.length;
+          userIndex = (userIndex + 1) % Anonymizr.people.length;
+          colorIndex = (colorIndex + 1) % Anonymizr.colors.length;
         }
 
         return usernameMap[username];
