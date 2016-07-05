@@ -13,6 +13,7 @@ Remove personal information from social networks and other websites before shari
 + Facebook
 + Instagram
 + LinkedIn
++ Slack
 + Youtube
 
 ## Chrome extension
