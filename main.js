@@ -128,15 +128,20 @@ var Anonymizr = {
         var getUsernameInfo = Anonymizr.util.getUsernameClosure(),
             i;
 
+        /**
+         * Global
+         */
+
         // Avatars
-        var avatars = document.querySelectorAll('.avatar, .timeline-comment-avatar');
+        var avatars =
+          document.querySelectorAll('.avatar, .timeline-comment-avatar, .select-menu-button-gravatar img');
 
         for (i = 0; i < avatars.length; i++) {
           Anonymizr.util.blur(avatars[i]);
         }
 
-        // Authors and user mentions
-        var authors = document.querySelectorAll('.author, .author a, .user-mention'),
+        // Authors, user mentions, owners in repositories you contribute to
+        var authors = document.querySelectorAll('.author, .author a, .user-mention, .mini-repo-list .owner'),
             username;
 
         for(i = 0; i < authors.length; i++) {
