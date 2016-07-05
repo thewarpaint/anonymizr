@@ -404,3 +404,5 @@ var Anonymizr = {
     }
   }
 };
+
+Anonymizr.autodetect();
