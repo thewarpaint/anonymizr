@@ -255,7 +255,8 @@ var Anonymizr = {
           }
 
           // Username for Who to follow
-          accountGroupUsername = accountGroups[i].querySelector('.account-group-inner .username span.js-username');
+          accountGroupUsername =
+            accountGroups[i].querySelector('.account-group-inner .username span.js-username');
 
           if(accountGroupUsername) {
             userInfo = getUsernameInfo(accountGroupUsername.textContent);
