@@ -14,3 +14,8 @@ Remove personal information from social networks and other websites before shari
 + Instagram
 + LinkedIn
 + Youtube
+
+## Chrome extension
+
+Icon from [Free Icon Rainbow](http://free-icon-rainbow.com/anonymous-mask-icon-1/).
+
