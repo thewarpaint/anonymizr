@@ -352,8 +352,8 @@ var Anonymizr = {
     },
 
     colorize: function (element, color) {
-      element.style.backgroundColor = color;
-      element.style.color = color;
+      element.style.setProperty('background-color', color, 'important');
+      element.style.setProperty('color', color, 'important');
     },
 
     // Fisher-Yates shuffle implementation from http://stackoverflow.com/a/2450976/6346268
