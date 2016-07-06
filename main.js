@@ -255,6 +255,46 @@ var Anonymizr = {
         return url.split('/')[4];
       }
     },
+
+    slack: {
+      hostnameCheck: /\.slack\.com$/,
+      process: function () {
+        var getUsernameInfo = Anonymizr.util.getUsernameClosure(),
+            userInfo,
+            username,
+            i;
+
+        // Avatars
+        var avatars = document.querySelectorAll('.member_image');
+
+        for (i = 0; i < avatars.length; i++) {
+          Anonymizr.util.blur(avatars[i]);
+        }
+
+        // Members, member links, channel members
+        var members = document.querySelectorAll('a.member, li.member a, .internal_member_link, ' +
+              '.channel_page_member_row [data-member-id]'),
+            mention;
+
+        for(i = 0; i < members.length; i++) {
+          username = Anonymizr.sites.slack.getUsernameFromUrl(members[i].href);
+          userInfo = getUsernameInfo(username);
+          mention = members[i].querySelector('.mention');
+
+          if(mention) {
+            Anonymizr.util.colorize(mention, userInfo.color);
+          } else {
+            Anonymizr.util.colorize(members[i], userInfo.color);
+          }
+        }
+      },
+
+      // Utilities
+      getUsernameFromUrl: function (url) {
+        return url.split('/')[4];
+      }
+    },
+
     twitter: {
       hostnameCheck: 'twitter.com',
       process: function () {
