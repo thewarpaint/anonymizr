@@ -122,6 +122,33 @@ var Anonymizr = {
    * Sites
    */
   sites: {
+    facebook: {
+      hostnameCheck: 'www.facebook.com',
+      process: function () {
+        var getUsernameInfo = Anonymizr.util.getUsernameClosure(),
+            userInfo,
+            username,
+            i;
+
+        // Avatars (`._38vo` is post author, `._55lq` is chat avatar, `._5r69` is post share,
+        //   `._3m9g` is liking and commenting as, `._43qm` is people in a place,
+        //   `._3-8j` is a birthday profile)
+        var avatars =
+              document.querySelectorAll('._38vo, ._55lq, .UFIRow ._ohe img, ' +
+                '.fbxWelcomeBoxProfilePicBlock img, [data-click="profile_icon"] img, ._5r69 ._ohe img,' +
+                '._3m9g ._55pe, ._43qm img, ._3-8j ._ohe img');
+
+        for (i = 0; i < avatars.length; i++) {
+          Anonymizr.util.blur(avatars[i]);
+        }
+      },
+
+      // Utilities
+      getUsernameFromUrl: function (url) {
+        return url.split('/')[3].split('?')[0];
+      }
+    },
+
     github: {
       hostnameCheck: 'github.com',
       process: function () {
