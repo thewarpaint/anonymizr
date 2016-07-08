@@ -25,3 +25,25 @@ Anonymizr is available as a
 
 Extension icon from [Free Icon Rainbow](http://free-icon-rainbow.com/anonymous-mask-icon-1/).
 
+## Changelog
+
+### 0.1.0
+
++ Added new color order for better contrast, stopped shuffling them
++ Added `!important` to colorize function to override page styles
++ Added support for:
+  + Facebook (avatars)
+  + GitHub (issue and pull request lists)
+  + Reddit (logged user)
+  + Slack (avatars, members, mentions)
+  + Twitter (stream activity headers in Notifications)
+
+### 0.0.1
+
++ Initial Chrome extension version
++ Added site autodetection
++ Added support for:
+  + GitHub (dashboard, repository home, issue and pull request detail)
+  + Reddit (front page, subreddits, comments)
+  + Twitter (timeline)
++ Used Google Material Colors
